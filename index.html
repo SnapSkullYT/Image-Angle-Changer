@@ -1,0 +1,88 @@
+<style>
+  #currentAngleDIV {
+    display: inline-block;
+    border-style: solid;
+    border-width: 1px;
+  }
+</style>
+
+<button onclick="spinImagePlus()">Add</button>
+<button onclick="spinImageSubtract()">Subtract</button>
+<div id="currentAngleDIV">
+  <a id="currentAngle">Current Angle: 0 Degrees</a>
+</div>
+<br>
+<br>
+<input placeholder="Rotate Angle" id="rotateAngle">
+<br>
+<br>
+<br>
+<br>
+
+<script>
+  var print = console.log
+  var imageURL = ("https://picsum.photos/200")
+  var rotateAngle = document.getElementById("rotateAngle")
+  var currentAngleText = document.getElementById("currentAngle")
+  var spinnyImage = document.createElement("img")
+  spinnyImage.id = ("spinnyImage")
+  spinnyImage.src = (imageURL)
+  spinnyImage.width = ((((((((1 * (0.5)) + ((1 * (120)) / (0.5)) + 1) - (0.5)) / 2) - (0.5)) + (((120) / 2) * 4)) - (120)) - (40))
+  spinnyImage.style.transform = ("rotate(0deg)")
+  document.body.appendChild(spinnyImage)
+  function spinImagePlus() {
+    if ((rotateAngle.value) !== ("")) {
+      if ((/^[0-9]+(\.[0-9]+)?$/).test(rotateAngle.value)) {
+        var spinnyImageTransform = (spinnyImage.style.transform)
+        var firstAngle = (spinnyImageTransform.substring(7))
+        var indexOfDeg = (firstAngle.indexOf("deg"))
+        var currentAngle = (parseInt(firstAngle.slice((0), (indexOfDeg))))
+        var angleIncrement = (parseInt(rotateAngle.value))
+        if (((currentAngle) + (angleIncrement)) >= (360)) {
+          spinnyImage.style.transform = (("rotate(") + (((currentAngle) + (angleIncrement)) - (360)) + ("deg)"))
+          if ((((currentAngle) + (angleIncrement)) - (360)) == (1)) {
+            currentAngleText.textContent = (("Current Angle: ") + ((currentAngle) + (angleIncrement)) + (" Degree"))
+          } else {
+            currentAngleText.textContent = (("Current Angle: ") + ((currentAngle) + (angleIncrement)) + (" Degrees"))
+          }
+        } else {
+          spinnyImage.style.transform = (("rotate(") + ((currentAngle) + (angleIncrement)) + ("deg)"))
+          if (((currentAngle) + (angleIncrement)) == (1)) {
+            currentAngleText.textContent = (("Current Angle: ") + ((currentAngle) + (angleIncrement)) + (" Degree"))
+          } else {
+            currentAngleText.textContent = (("Current Angle: ") + ((currentAngle) + (angleIncrement)) + (" Degrees"))
+          }
+        }
+      }
+    }
+  }
+  function spinImageSubtract() {
+    if ((rotateAngle.value) !== ("")) {
+      if ((/^[0-9]+(\.[0-9]+)?$/).test(rotateAngle.value)) {
+        var spinnyImageTransform = (spinnyImage.style.transform)
+        var firstAngle = (spinnyImageTransform.substring(7))
+        var indexOfDeg = (firstAngle.indexOf("deg"))
+        var currentAngle = (parseInt(firstAngle.slice((0), (indexOfDeg))))
+        var angleIncrement = (parseInt(rotateAngle.value))
+        if (((currentAngle) - (angleIncrement)) <= (0)) {
+          spinnyImage.style.transform = (("rotate(") + ((360) + ((currentAngle) - (angleIncrement))) + ("deg)"))
+          if (((360) + ((currentAngle) - (angleIncrement))) == (1)) {
+            currentAngleText.textContent = (("Current Angle: ") + ((360) + ((currentAngle) - (angleIncrement))) + (" Degree"))
+          } else {
+            currentAngleText.textContent = (("Current Angle: ") + ((360) + ((currentAngle) - (angleIncrement))) + (" Degrees"))
+          }
+        } else {
+          spinnyImage.style.transform = (("rotate(") + ((currentAngle) - (angleIncrement)) + ("deg)"))
+          if (((currentAngle) - (angleIncrement)) == (1)) {
+            currentAngleText.textContent = (("Current Angle: ") + ((currentAngle) - (angleIncrement)) + (" Degree"))
+          } else {
+            currentAngleText.textContent = (("Current Angle: ") + ((currentAngle) - (angleIncrement)) + (" Degrees"))
+          }
+        }
+      }
+    }
+  }
+  rotateAngle.addEventListener(("input"), function(event) {
+    event.target.value = (event.target.value.replace(/[^0-9]/g, ("")))
+  })
+</script>
